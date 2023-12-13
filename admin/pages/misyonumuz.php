@@ -30,12 +30,12 @@ if ($_POST) {
             $status = $_POST['status'];
             $created_at = date('Y-m-d H:i:s');
             $user_id = 1;
-            $sql = "INSERT INTO qp_about(title,description,created_at,user_id,status) VALUES(?,?,?,?,?)";
+            $sql = "INSERT INTO qp_mission(title,description,created_at,user_id,status) VALUES(?,?,?,?,?)";
             $args = [$title, $description, $created_at, $user_id, $status];
             print($adminclass->pdoInsert($sql, $adminclass->getSecurity($args)));
         } elseif (isset($_POST['dataDelete'])) {
             $deleteId = $_POST['dataDelete'];
-            $sql = "DELETE FROM qp_about WHERE id= ? ";
+            $sql = "DELETE FROM qp_mission WHERE id= ? ";
             $args = [$deleteId];
             $result = $adminclass->pdoDelete($sql, $args);
             print($result);
@@ -44,8 +44,8 @@ if ($_POST) {
             $title = $_POST['title'];
             $description = $_POST['description'];
             $status = $_POST['status'];
-            $sql = "UPDATE qp_about SET title=? , description=?,status=? WHERE id=? ";
-            $args = [$title,$description,$status,$updateId];
+            $sql = "UPDATE qp_mission SET title=? , description=?,status=? WHERE id=? ";
+            $args = [$title, $description, $status, $updateId];
             print($adminclass->pdoPrepare($sql, $adminclass->getSecurity($args)));
         }
     }
@@ -78,7 +78,9 @@ if ($_POST) {
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $variable = $adminclass->getAbout();
+                                    //$variable = $adminclass->getAbout();
+                                    $sql = "SELECT * FROM qp_mission ORDER BY id DESC";
+                                    $variable = $adminclass->pdoQuery($sql);
                                     if ($variable) {
                                         foreach ($variable as $value) {
                                     ?>
@@ -160,7 +162,7 @@ if ($_POST) {
                                                                                         <!-- textarea -->
                                                                                         <div class="form-group">
                                                                                             <label>Açıklama</label>
-                                                                                            <textarea class="form-control" name="description" rows="5" ><?php print $value['description']; ?></textarea>
+                                                                                            <textarea class="form-control" name="description" rows="5"><?php print $value['description']; ?></textarea>
                                                                                         </div>
                                                                                     </div>
 
@@ -171,8 +173,8 @@ if ($_POST) {
                                                                                         <div class="form-group">
                                                                                             <label>Durum</label>
                                                                                             <select name="status" class="form-control">
-                                                                                                <option value="1" <?php echo $value['status']==1 ? "selected": ""; ?>>Aktif</option>
-                                                                                                <option value="0" <?php echo $value['status']==0 ? "selected": ""; ?>>Pasif</option>
+                                                                                                <option value="1" <?php echo $value['status'] == 1 ? "selected" : ""; ?>>Aktif</option>
+                                                                                                <option value="0" <?php echo $value['status'] == 0 ? "selected" : ""; ?>>Pasif</option>
                                                                                             </select>
                                                                                         </div>
                                                                                     </div>
@@ -199,6 +201,8 @@ if ($_POST) {
                                             </tr>
                                     <?php
                                         }
+                                    }else {
+                                     //   print("veri yok");
                                     }
                                     ?>
                                 </tbody>

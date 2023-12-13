@@ -26,6 +26,8 @@ if ($_POST) {
         if (isset($_POST['save']) && (@$_POST['save'] == "1001")) {
             //  print_r($_SERVER['REQUEST_METHOD']);
             $title = $_POST['title'];
+
+
             $description = $_POST['description'];
             $status = $_POST['status'];
             $created_at = date('Y-m-d H:i:s');

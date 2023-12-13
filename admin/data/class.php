@@ -45,19 +45,32 @@ class AdminClass
         } else {
             return '<div class="alert alert-danger">Silme işlemi başarısız</div>';
         }
-    }
+    } 
 
-    public function pdoPrepare($sql, $args)
+    public function pdoPrepare($sql, $args=[])
     {
         $statement = $this->pdo->prepare($sql);
         $response = $statement->execute($args);
         if ($response) {
-            return '<div class="alert alert-success">Güncelleme işlemi başarılı</div>';
+            return '<div class="alert alert-succe ss">Güncelleme işlemi başarılı</div>';
         } else {
             return '<div class="alert alert-danger">Güncelleme işlemi başarısız</div>';
         }
     }
 
+
+    public function pdoQuery($sql)
+    {
+        $query = $this->pdo->query($sql, PDO::FETCH_ASSOC)->fetchAll();
+        return $query ?? false;
+        /*
+        if($query){
+            return $query;
+        }else{
+            return false;
+        }
+       */
+    }
 
 
 
@@ -78,7 +91,6 @@ class AdminClass
 
     public function getSecurity($data)
     {
-
         if (is_array($data)) {
             $variable = array_map('htmlspecialchars', $data);
             $response = array_map('stripslashes', $variable);
@@ -89,4 +101,16 @@ class AdminClass
             return $response;
         }
     }
+
+    public function getStatus($data){
+        switch($data){
+            case '1':
+                return 'Aktif';
+            case '0':
+                return 'Pasif';
+            default:
+                return 'Belirsiz';
+        }
+    }
+
 }
