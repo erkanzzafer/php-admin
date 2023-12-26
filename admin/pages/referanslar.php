@@ -105,6 +105,7 @@
                                  <table id="example2" class="table table-bordered table-hover">
                                      <thead>
                                          <tr>
+                                             <th>Seç</th>
                                              <th>ID</th>
                                              <th>Başlık</th>
                                              <th>Açıklama</th>
@@ -123,14 +124,17 @@
 
                                             ?>
                                                  <tr>
+                                                     <td width="5px">
+                                                         <input type="checkbox" name="deleteAll[]" id="deleteAll" value="<?php print($value['id']); ?>">
+                                                     </td>
                                                      <td><?php print($value['id']); ?></td>
                                                      <td><?php print($value['title']); ?></td>
                                                      <td><?php print($value['description']); ?></td>
                                                      <td><img src="<?php print $value["image"]; ?>" width="100" height="100" alt=""></td>
                                                      <td><?php print($adminclass->getStatus($value['status'])); ?></td>
-                                                     <td>
-                                                         <input type="checkbox" name="deleteAll[]" id="deleteAll" value="<?php print($value['id']); ?>">
-                                                     </td>
+                                                    <td>
+                                                        <a href="referans_edit?id=<?php print($value['id']); ?>">Güncelle</a>
+                                                    </td>
                                                  </tr>
                                          <?php
                                                 }
@@ -139,6 +143,7 @@
                                      </tbody>
                                      <tfoot>
                                          <tr>
+                                             <th>Seç</th>
                                              <th>ID</th>
                                              <th>Başlık</th>
                                              <th>Açıklama</th>
